@@ -1,6 +1,7 @@
 body {
     text-align: center;
     font-family: 'PT Sans'; sans-serif;
+    overflow-y: scroll;
 }
 
 h1 div {
@@ -13,14 +14,24 @@ h5 {
     margin-top: -20px;
 }
 
+.tooltip {
+    color: #444;
+    cursor: help;
+}
+
 #menu {
-    margin: 20px;
     margin-left: auto;
     margin-right: auto;
+    table-layout: fixed;
+    height: 40px;
 }
 
 #menu td {
     min-width: 300px;
+}
+
+#main-content {
+    margin-top: 20px;
 }
 
 table {
@@ -29,9 +40,21 @@ table {
     margin: auto;
 }
 
-#main > tbody > td, th {
+#main-table > tbody > td, th {
     padding: 5px;
     min-width: 200px;
+}
+
+#main-table {
+    line-height: 2em;
+}
+
+#main-table > tbody > tr:nth-child(even) {
+    background-color: #9e9;
+}
+
+#main-table > tbody > tr:nth-child(odd) {
+    background-color: #6c6;
 }
 
 .intermediate-station {
@@ -73,20 +96,12 @@ th:empty {
     text-align: left;
 }
 
-#main {
-    line-height: 2em;
-}
-
-#main > tbody  > tr:nth-child(even) {
-    background-color: #9e9;
-}
-
-#main > tbody > tr:nth-child(odd) {
-    background-color: #6c6;
-}
-
 .date {
     font-size: 20px;
+}
+
+.message {
+    margin: 15px;
 }
 
 hr {
