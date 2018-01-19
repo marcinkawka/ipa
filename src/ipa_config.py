@@ -22,7 +22,7 @@ db = {
 }
 
 stations = {
-#   u'Bialystok': 24000,
+   u'Bialystok': 24000,
 #   u'Bydgoszcz': 18408,
 #    u'Gdansk': 7500,
 #    u'Katowice': 73312,
@@ -32,11 +32,11 @@ stations = {
     u'Lublin': 50500,
 #    u'Opole': 60608,
 #    u'Olsztyn': 9209,
-#    u'Poznan': 30601,
+    u'Poznan': 30601,
 #    u'Rzeszow': 82669,
 #    u'Szczecin': 274,
-#    u'Torun': 19704,
+    u'Torun': 19704,
 #    u'Warszawa': 33605,
-#    u'Wroclaw': 60103,
+    u'Wroclaw': 60103,
 #    u'Zielona Gora': 27805,
 }
