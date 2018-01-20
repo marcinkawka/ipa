@@ -69,7 +69,17 @@ class Db:
 
     def get_station_id(self, station_name):
         return self.select_query('SELECT station_id FROM station WHERE station_name = %s', (station_name,))
-
+	
+    def get_station_trains(self,station_name,date):
+        return self.select_query('''SELECT sinf.arrival_time,sinf.departure_time,sinf.arrival_delay,sinf.departure_delay,tr.train_name 
+										FROM schedule_info sinf 
+									INNER JOIN schedule sc on sinf.schedule_id=sc.schedule_id
+									INNER JOIN train tr on sc.train_id=tr.train_id	
+										WHERE sinf.station_id=(
+											SELECT st.station_id FROM station st WHERE st.station_name=%s)
+										AND DATE(sinf.arrival_time) =%s
+									ORDER BY (sinf.arrival_time) ''',(station_name,date))
+		
     def update_schedule(self, schedule_id, schedule_date, train_id):
         self._execute('''REPLACE INTO schedule VALUES(%s, %s, %s, 1)''', (schedule_id, schedule_date, train_id))
 
