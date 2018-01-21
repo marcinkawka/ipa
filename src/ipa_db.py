@@ -79,7 +79,42 @@ class Db:
 											SELECT st.station_id FROM station st WHERE st.station_name=%s)
 										AND DATE(sinf.arrival_time) =%s
 									ORDER BY (sinf.arrival_time) ''',(station_name,date))
-		
+	
+    def get_most_delayed_trains(self,min_delay,date):
+        return self.select_query('''select 	t2.max_delay,
+                                            tr.train_name,
+                                            s_info2.arrival_time,
+                                            st.station_name
+                                    from train tr,
+                                         schedule_info s_info2,
+                                         schedule s2,
+                                         station st
+	                                inner join
+                                        (select s.schedule_id,
+                                                s.train_id,
+                                                max(t1.arrival_delay) as max_delay,
+                                                t1.station_id
+                                        from schedule s
+                                        inner join
+                                            (select  s_info.arrival_delay,
+                                                     s_info.arrival_time,
+                                                     s_info.schedule_id,
+                                                     s_info.station_id
+                                            from schedule_info s_info
+                                            ) t1 on s.schedule_id=t1.schedule_id
+                                        where DATE(t1.arrival_time)=%s
+                                        and t1.arrival_delay> %s
+                                        group by s.train_id) t2
+    
+                                    where tr.train_id=t2.train_id
+                                        and s_info2.arrival_delay=t2.max_delay
+                                        and s_info2.schedule_id=s2.schedule_id
+                                        and st.station_id=s_info2.station_id
+                                        and DATE(s_info2.arrival_time)=%s
+                                    group by tr.train_id    
+                                order by max_delay desc''',(date,min_delay,date))
+
+    	
     def update_schedule(self, schedule_id, schedule_date, train_id):
         self._execute('''REPLACE INTO schedule VALUES(%s, %s, %s, 1)''', (schedule_id, schedule_date, train_id))
 
