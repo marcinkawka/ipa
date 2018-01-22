@@ -110,6 +110,7 @@ class Db:
                                         and s_info2.arrival_delay=t2.max_delay
                                         and s_info2.schedule_id=s2.schedule_id
                                         and st.station_id=s_info2.station_id
+                                        and s_info2.station_id=t2.station_id
                                         and DATE(s_info2.arrival_time)=%s
                                     group by tr.train_id    
                                 order by max_delay desc''',(date,min_delay,date))
