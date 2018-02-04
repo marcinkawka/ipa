@@ -1,5 +1,5 @@
 import datetime
-
+import time
 import station_api
 import train_api
 import ipa_config
@@ -21,6 +21,7 @@ class UpdateTrains:
             try:
                 log('Updating train schedule %d', schedule_id)
                 self.update_train_schedule(db, schedule_id)
+                time.sleep(.5)
             except Exception as e:
                 print(e)
                 log('Failed to update train schedule %d: %s', schedule_id, str(e))
