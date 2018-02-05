@@ -111,7 +111,18 @@ class Db:
 												vtc1.max_delay	
 								order by vtc1.max_delay DESC''',(min_delay,date,active,date,active,active))
 
-    	
+    def get_delay_timeseries(self,train_name,station_name):
+        return self.select_query('''SELECT vtc.schedule_date,
+                                            vtc.arrival_delay 
+                                    FROM v_train_course vtc 
+                                    where vtc.train_id=(SELECT train_id 
+                                                        from train 
+                                                        where train_name=%s)
+                                    and vtc.station_id=(select station_id 
+                                                        from station
+                                                        where station_name=%s)
+                                    order by vtc.schedule_date''',(train_name,station_name))
+            
     def update_schedule(self, schedule_id, schedule_date, train_id):
         self._execute('''REPLACE INTO schedule VALUES(%s, %s, %s, 1)''', (schedule_id, schedule_date, train_id))
 
