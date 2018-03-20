@@ -111,6 +111,18 @@ class Db:
 												vtc1.max_delay	
 								order by vtc1.max_delay DESC''',(min_delay,date,active,date,active,active))
 
+    def get_random_train(self):
+        return self.select_query('''SELECT tr.train_name,
+                                            lt.hashtag,
+                                            lt.station1,
+                                            lt.station2,
+                                            lt.station3,
+                                            lt.station4,
+                                            lt.station5
+                                    FROM longTrain lt,train tr
+                                    where tr.train_id=lt.train_id
+                                    order by rand() limit 1;''')
+        
     def get_delay_timeseries(self,train_name,station_name):
         return self.select_query('''SELECT vtc.schedule_date,
                                             vtc.arrival_delay 
